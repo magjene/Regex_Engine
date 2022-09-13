@@ -44,12 +44,14 @@ def reg(r):
     if len(r) == 1 or (len(r) == 2 and r[0] == '|') or (len(r) == 3 and (r[0] == '.' or r[0] == r[2])):
         return True
     else:
-        if len(r) == 2 and r[0] != '|':
-            return False
-        else:
-            re, inp = r.split('|')
-            for j in range(len(re)):
-                qwe = True if re[j] == '.' or inp[j] == '.' or re[j] == inp[j] else False
-                if qwe is False:
-                    return False
-            return True
+        # if len(r) == 2 and r[0] != '|':
+        return False
+
+
+l = input()
+
+# while len(l) < 4:
+#     print(reg(l))
+#     l = input('\nInput reg|str\n')
+
+print(reg(l))
