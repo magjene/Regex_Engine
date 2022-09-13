@@ -38,3 +38,18 @@ For valid testing, the results should be printed to the command line. This can b
 
 Hint: There are multiple ways to tell if a string is empty. For example, you can use the fact that the length of an empty string is always zero. You may also compare the input string to an empty string literal represented by empty quotation marks ('' or ""). Finally, you can use the boolean logic to determine whether a string is empty.
 """
+
+
+def reg(r):
+    if len(r) == 1 or (len(r) == 2 and r[0] == '|') or (len(r) == 3 and (r[0] == '.' or r[0] == r[2])):
+        return True
+    else:
+        if len(r) == 2 and r[0] != '|':
+            return False
+        else:
+            re, inp = r.split('|')
+            for j in range(len(re)):
+                qwe = True if re[j] == '.' or inp[j] == '.' or re[j] == inp[j] else False
+                if qwe is False:
+                    return False
+            return True
