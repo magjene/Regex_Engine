@@ -41,11 +41,8 @@ Hint: There are multiple ways to tell if a string is empty. For example, you can
 
 
 def reg(r):
-    if len(r) == 1 or (len(r) == 2 and r[0] == '|') or (len(r) == 3 and (r[0] == '.' or r[0] == r[2])):
-        return True
-    else:
-        # if len(r) == 2 and r[0] != '|':
-        return False
+    regex, word = r.split("|")
+    return regex == word or regex == '.' or regex == ''
 
 
 l = input()
@@ -55,3 +52,7 @@ l = input()
 #     l = input('\nInput reg|str\n')
 
 print(reg(l))
+
+"""
+print(reg == str_ or reg == '.' or reg == '')
+"""
