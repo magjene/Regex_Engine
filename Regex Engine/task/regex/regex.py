@@ -43,13 +43,14 @@ def sentence(rege, wor, i):
     if rege == '' or wor == '':
         return reg(rege, wor)
     elif i == 0:
-        return reg(rege[i], wor[i])
+        all_true.append(reg(rege[i], wor[i]))
     else:
-        return sentence(rege, wor, i - 1)
+        all_true.append(reg(rege[i], wor[i]))
+        sentence(rege, wor, i - 1)
+    return all(all_true)
 
 
-regex = ''
-while regex != 'exit':
-    regex, word = input().split("|")
-    ind = len(word)
-    print(sentence(regex, word, ind))
+all_true = []
+regex, word = input().split("|")
+ind = len(word) - 1
+print(sentence(regex, word, ind))
