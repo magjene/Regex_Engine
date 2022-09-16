@@ -35,15 +35,21 @@ Input: 'peach|apple'     Output: False
 """
 
 
-def reg(r):
-    regex, word = r.split("|")
-    return regex == word or regex == '.' or regex == ''
+def reg(r, w):
+    return r == w or r == '.' or r == ''
 
 
-l = input()
+def sentence(rege, wor, i):
+    if rege == '' or wor == '':
+        return reg(rege, wor)
+    elif i == 0:
+        return reg(rege[i], wor[i])
+    else:
+        return sentence(rege, wor, i - 1)
 
-# while len(l) < 4:
-#     print(reg(l))
-#     l = input('\nInput reg|str\n')
 
-print(reg(l))
+regex = ''
+while regex != 'exit':
+    regex, word = input().split("|")
+    ind = len(word)
+    print(sentence(regex, word, ind))
