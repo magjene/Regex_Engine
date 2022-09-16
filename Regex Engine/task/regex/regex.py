@@ -35,22 +35,19 @@ Input: 'peach|apple'     Output: False
 """
 
 
-def reg(r, w):
-    return r == w or r == '.' or r == ''
+def reg(regex, word):
+    return regex[0] == word[0] or regex[0] == '.' or regex == ''
 
 
-def sentence(rege, wor, i):
-    if rege == '' or wor == '':
-        return reg(rege, wor)
-    elif i == 0:
-        all_true.append(reg(rege[i], wor[i]))
-    else:
-        all_true.append(reg(rege[i], wor[i]))
-        sentence(rege, wor, i - 1)
-    return all(all_true)
+def match_re_str(regex, word):
+    # if regex == '' or word == '':
+    #     return reg(regex, word)
+    # else:
+    #     if len(regex) > 0:
+    #         reg(regex, word)
+    #         match_re_str(regex[1:], word[1:])
+    return not regex or word != "" and regex[0] in [word[:1], '.'] and match_re_str(regex[1:], word[1:])
 
 
-all_true = []
-
-print(sentence(*input().split("|")))
+print(match_re_str(*input().split("|")))
 
