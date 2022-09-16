@@ -51,6 +51,6 @@ def sentence(rege, wor, i):
 
 
 all_true = []
-regex, word = input().split("|")
-ind = len(word) - 1
-print(sentence(regex, word, ind))
+
+print(sentence(*input().split("|")))
+
