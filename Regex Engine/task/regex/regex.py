@@ -48,25 +48,13 @@ Input: 'peach|apple'     Output: False
 """
 
 
-def reg(regex, word):
-    return regex[0] == word[0] or regex[0] == '.'
+# def reg(regex, word):
+#     return regex[0] == word[0] or regex[0] == '.'
 
 
 def match_re_str(regex, word):
-    if regex == '':
-        return True
-    elif word == '' or len(regex) > len(word):
-        return False
-    else:
-        if len(regex) == 1:
-            all_match.append(reg(regex, word))
-        else:
-            all_match.append(reg(regex, word))
-            match_re_str(regex[1:], word[1:])
-        return all(all_match)
+    return not regex or word != "" and regex[0] in [word[:1], '.'] and match_re_str(regex[1:], word[1:])
 
-    # return not regex or word != "" and regex[0] in [word[:1], '.'] and match_re_str(regex[1:], word[1:])
 
-all_match = []
-print(match_re_str(*input().split("|")))
-
+for _ in range(10):
+    print(match_re_str(*input().split("|")))
