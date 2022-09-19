@@ -56,5 +56,16 @@ def match_re_str(regex, word):
     return not regex or word != "" and regex[0] in [word[:1], '.'] and match_re_str(regex[1:], word[1:])
 
 
-for _ in range(10):
-    print(match_re_str(*input().split("|")))
+def main():
+    log = []
+    r, w = input().split("|")
+    len_r, len_w = len(r), len(w)
+    if len_r > len_w:
+        return print(False)
+    log.append(match_re_str(r, w))
+    for _ in range(len_w - len_r):
+        log.append(match_re_str(r[1:], w[1:]))
+    print(log)
+
+
+main()
