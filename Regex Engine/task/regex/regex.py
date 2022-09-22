@@ -1,50 +1,40 @@
 """
 Project: Regex Engine
-Stage 3/6: Working with strings of different length
+Stage 4/6: Implementing the operators ^ and $
 
 
 Description
-At this point, your regex engine is pretty basic and not very useful. Comparing two equal length patterns to each other is not what we usually need. Let's add support for comparing regex-string pairs of different lengths.
+Regular expressions are useful and flexible because they include a set of metacharacters. So far, the only metacharacter we can handle is the wild-card (.). Although it is certainly useful, our engine still lacks the flexibility we need.
 
-For example, the engine will be able to compare the substring tion with the following words and find matches: section, seduction, introduction, intersection, motion, neon, chair, mockingbird. As you can see, this scenario is already more realistic: there is a bunch of words and we only want to select those with a specific suffix.
+Let's think of a case where we would want a pattern to match only if it happens in a certain part of the input string, for example, only the beginning or the end. Do you remember the example from the previous stage where we wanted to match only the nouns that end with the suffix tion? That's exactly the case where we need the metacharacter $. The regex tion$ will match the string section but not sections, even though tion is part of both strings.
 
-So, how does it work if our function can only work with regex-string pairs of equal length? Remember, in the previous step we added two terminating conditions to the function: if the regex is consumed, we return True, and if the string is consumed, we return False. The first condition means that we have gone over the whole regex and there is a match. The other case shows that there cannot be a match since the regex has not been consumed and there is no string to compare it to. These two conditions make sure that the function does not break if the text is for some reason longer than the regex or vice versa.
+The metacharacter ^ is the opposite: it only matches a pattern if it is located at the beginning of the input string. This way, the regex ^be will match the strings beware, become, behind, but not to be, even though it contains be.
 
-One way to tackle this problem is to repeatedly invoke that function and check if there is a match. If there isn't, another section of the string should be passed.
-
-Let's see how this can be done with our suffix example:
-
-Input: ‘tion|Section’     Output: False
-Input: ‘tion|ection’      Output: False
-Input: ‘tion|ction’       Output: False
-Input: ‘tion|tion’        Output: True
 Objectives
-Your improved regex engine should do the following:
+Your task is to add some metacharacters to the already existing regex engine.
 
-A new function is created as an entry point;
-It should repeatedly invoke the function that compares two equal length patterns;
-If that function returns True, the new function should also return True;
-If that function returns False, the input string should be passed to the matching function with an incremented starting position, and the regex should be passed unmodified;
-The process goes on until the entire input string has been consumed.
-A way to implement this is to use slicing like in the previous stages, but do it only to progress the input string.
-The input string should be consumed character by character, and the regex should be checked against every position.
+At this stage, you should add the following special cases:
 
-A loop can be used to take care of the changing starting characters, but you can also experiment more with recursion.
+^ can occur at the beginning of the regex, and it means that the following regex should be matched only at the beginning of the input string.
+$ can occur at the end of the regex, and it means that the preceding regex should be matched only at the end of the input string.
+Actually, the engine already contains a function that matches only the beginning of the input string: you created one in the second stage! Yet you should directly invoke it from the current entry point only if the regex starts with the character ^. Also, do not forget that you shouldn’t pass the regex ^ itself to the function!
 
-In case you choose to use a loop, keep in mind that the type of the loop you use is optional, but in order to slice a string, integers should be passed as string indexes, and an index should not be greater than the length of the input string. If the end of the string is reached, the input string is consumed without a match, which should return False.
+The case with $ is a bit more complicated. Don't worry: with a little thinking, we can get our heads around it. How do we know if the input string ends with the regex succeeded by $? Normally, if a regex matches the end of a string, they are consumed at the same iteration, and True is returned according to the terminating conditions. However, since $ is a metacharacter, it should be at the end of the regex when the input string has already been consumed. At the current state of the function, it should return False because the input string is consumed while the regex is not. Yet since we know that $ has a special meaning, if we see it as the last character of a string, we should assume that the input string is empty. It should be checked, and if that is the case, the function should return True.
 
-If you prefer to stick to recursion, use the same logic you used earlier. However, keep in mind that Python has a limit on recursion, and it might be reached if you're dealing with longer strings. To counter this, the following lines should be added to your program if it throws an error message about reaching the recursion limit:
+Note: the position of the terminating conditions can alter the behavior of the function! This condition should be added after the regex has been determined as empty or not, but before the same is determined for the input string.
 
-import sys
-sys.setrecursionlimit(10000)
 Example
-Input: 'apple|apple'     Output: True
-Input:    'ap|apple'     Output: True
-Input:    'le|apple'     Output: True
-Input:     'a|apple'     Output: True
-Input:     '.|apple'     Output: True
-Input: 'apwle|apple'     Output: False
-Input: 'peach|apple'     Output: False
+Input:    '^app|apple'           Output: True
+Input:     'le$|apple'           Output: True
+Input:      '^a|apple'           Output: True
+Input:      '.$|apple'           Output: True
+Input:  'apple$|tasty apple'     Output: True
+Input:  '^apple|apple pie'       Output: True
+Input: '^apple$|apple'           Output: True
+Input: '^apple$|tasty apple'     Output: False
+Input: '^apple$|apple pie'       Output: False
+Input:    'app$|apple'           Output: False
+Input:     '^le|apple'           Output: False
 """
 
 
@@ -65,5 +55,5 @@ def main():
     print(any(log))
 
 
-# main()
+main()
 
