@@ -65,4 +65,5 @@ def main():
     print(any(log))
 
 
-main()
+# main()
+
