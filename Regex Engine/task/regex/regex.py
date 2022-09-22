@@ -45,28 +45,28 @@ def match_re_str(regex, word):
 def main():
     log = []
     r, w = input().split("|")
+    if r != '' and r[0] == '^' and r[-1] == '$':
+        r = r[1:-1]
+        if len(r) != len(w):
+            return print(False)
+    if r != '' and r[0] == '^':
+        r = r[1:]
+        if len(r) > len(w):
+            return print(False)
+        w = w[:len(r) + 1]
+    if r != '' and r[-1] == '$':
+        r = r[:-1]
+        if len(r) > len(w):
+            return print(False)
+        w = w[len(w) - len(r):]
     len_r, len_w = len(r), len(w)
     if len_r > len_w:
         return print(False)
-    if r[0] == '^' and r[-1] == '$':
-        if r[1:-1] == w:
-            return print(True)
-        else:
-            return print(False)
-    if r[0] == '^':
-        if r[1::] == w:
-            return print(True)
-        else:
-            return print(False)
-    if r[-1] == '$':
-        if r[:-1:] == w:
-            return print(True)
-        else:
-            return print(False)
     log.append(match_re_str(r, w))
     for _ in range(len_w - len_r):
         log.append(match_re_str(r, w[1:]))
     print(any(log))
 
 
+# for _ in range(20):
 main()
