@@ -92,5 +92,8 @@ files:
         RegexTest('regex.regex').run_tests()
   learner_created: false
 feedback_link: https://hyperskill.org/learn/step/10242#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 22 Sep 2022 20:45:01 UTC
 record: 4

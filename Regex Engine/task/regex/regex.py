@@ -64,7 +64,8 @@ def main():
         return print(False)
     log.append(match_re_str(r, w))
     for _ in range(len_w - len_r):
-        log.append(match_re_str(r, w[1:]))
+        w = w[1:]
+        log.append(match_re_str(r, w))
     print(any(log))
 
 
