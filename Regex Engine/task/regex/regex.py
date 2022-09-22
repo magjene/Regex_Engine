@@ -48,12 +48,25 @@ def main():
     len_r, len_w = len(r), len(w)
     if len_r > len_w:
         return print(False)
+    if r[0] == '^' and r[-1] == '$':
+        if r[1:-1] == w:
+            return print(True)
+        else:
+            return print(False)
+    if r[0] == '^':
+        if r[1::] == w:
+            return print(True)
+        else:
+            return print(False)
+    if r[-1] == '$':
+        if r[:-1:] == w:
+            return print(True)
+        else:
+            return print(False)
     log.append(match_re_str(r, w))
     for _ in range(len_w - len_r):
-        w = w[1:]
-        log.append(match_re_str(r, w))
+        log.append(match_re_str(r, w[1:]))
     print(any(log))
 
 
 main()
-
